@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { Link, Navigate } from "react-router-dom";
 import ToggleSwitch from "../component/ToggleSwitch";
+import PopUp from "../component/PopUp";
 
 export default function Profile() {
   let nav = useNavigate();
@@ -59,9 +60,10 @@ export default function Profile() {
           img="./icons/reset.svg"
           onClick={() => {
             localStorage.clear();
-            alert("All Cleared ");
+            alert("All data has been reset");
           }}
         />
+
         <GetOptions
           text="Total"
           img="./icons/total.svg"
@@ -102,6 +104,7 @@ function GetOptions({
       onClick={onClick}
       className="bg-white/5 border-white/10 p-3 flex items-center gap-3 rounded-lg "
     >
+      {onClick}
       <img src={img} alt="" className="w-6 aspect-square invert" />
       <div className="text-lg font-medium opacity-75">{text}</div>
     </div>

@@ -26,37 +26,7 @@ export default function Home() {
 
   useEffect(() => {
     setBills(JSON.parse(localStorage.getItem("bills") || "[]").reverse());
-    // sortBills();
   }, []);
-
-  function compare(a: any, b: any) {
-    if (new Date(a.date).getTime() < new Date(b.date).getTime()) {
-      return -1;
-    }
-    if (new Date(a.date).getTime() > new Date(b.date).getTime()) {
-      return 1;
-    }
-    return 0;
-  }
-
-  function sortBills() {
-    let sortedBills = bills.sort(compare);
-    setBills([...sortedBills]);
-  }
-
-  // function addBill() {
-  //   let bill = {} as any;
-  //   bill.date = new Date();
-  //   bill.rice = rice;
-  //   bill.meat = meat;
-  //   bill.egg = egg;
-  //   bill.fish = fish;
-  //   bill.ruti = ruti;
-  //   setBills([...bills, bill]);
-  //   localStorage.setItem("bills", JSON.stringify(bills));
-  // }
-
-  console.log(bills);
 
   function getDate(myDate: any) {
     const date = new Date(myDate);
@@ -92,65 +62,71 @@ export default function Home() {
       </div>
 
       <div className="space-y-3 p-4">
-        {bills.map((bill: any) => {
-          return (
-            <div
-              key={Math.random()}
-              className="bg-white/5 border border-white/10 p-2.5 rounded-3xl space-y-2 flex justify-between items-center"
-            >
-              <div className="flex flex-col gap-1 w-[80%] ">
-                <div className="ml-1 text-xl font-semibold pb-1 ">
-                  {getDate(bill.date)}
+        {!bills.length ? (
+          <div className="text-4xl opacity-20 text-center py-[50%]  font-semibold">
+            No Bill
+          </div>
+        ) : (
+          bills.map((bill: any) => {
+            return (
+              <div
+                key={Math.random()}
+                className="bg-white/5 border border-white/10 p-2.5 rounded-3xl space-y-2 flex justify-between items-center"
+              >
+                <div className="flex flex-col gap-1 w-[80%] ">
+                  <div className="ml-1 text-xl font-semibold pb-1 ">
+                    {getDate(bill.date)}
+                  </div>
+                  <div className="flex gap-2">
+                    {bill.rice ? (
+                      <div className="flex border bg-[#00e676] shadow-lg shadow-[#00e676]/40 border-white/5 rounded-full text-xs font-medium px-3 py-1">
+                        Rice{" "}
+                      </div>
+                    ) : (
+                      <></>
+                    )}
+                    {bill.meat ? (
+                      <div className="flex border bg-[#ff4081] shadow-lg shadow-[#ff4081]/40 border-white/5 rounded-full text-xs font-medium px-3 py-1">
+                        Meat{" "}
+                      </div>
+                    ) : (
+                      <></>
+                    )}
+                    {bill.fish ? (
+                      <div className="flex border bg-[#03a9f4] shadow-lg shadow-[#03a9f4]/40 border-white/5 rounded-full text-xs font-medium px-3 py-1">
+                        Fish{" "}
+                      </div>
+                    ) : (
+                      <></>
+                    )}
+                    {bill.egg ? (
+                      <div className="flex border bg-[#ff5252] shadow-lg shadow-[#ff5252]/40 border-white/5 rounded-full text-xs font-medium px-3 py-1">
+                        Egg{" "}
+                      </div>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                  <div className="text-lg ml-1">Ruti : {bill.ruti}</div>
+                  <div className="ml-1 text-sm font-medium bg-white/5 w-full rounded-full h-4">
+                    <div
+                      className={`h-4 rounded-full bg-[#8866ff] shadow-md shadow-[#8866ff]/40`}
+                      style={{ width: `${bill.ruti * 10}%` }}
+                    ></div>
+                  </div>
                 </div>
-                <div className="flex gap-2">
-                  {bill.rice ? (
-                    <div className="flex border bg-[#00e676] border-white/5 rounded-full text-xs font-medium px-3 py-1">
-                      Rice{" "}
-                    </div>
-                  ) : (
-                    <></>
-                  )}
-                  {bill.meat ? (
-                    <div className="flex border bg-[#ff4081] border-white/5 rounded-full text-xs font-medium px-3 py-1">
-                      Meat{" "}
-                    </div>
-                  ) : (
-                    <></>
-                  )}
-                  {bill.egg ? (
-                    <div className="flex border bg-[#03a9f4] border-white/5 rounded-full text-xs font-medium px-3 py-1">
-                      Egg{" "}
-                    </div>
-                  ) : (
-                    <></>
-                  )}
-                  {bill.fish ? (
-                    <div className="flex border bg-[#ff5252] border-white/5 rounded-full text-xs font-medium px-3 py-1">
-                      Fish{" "}
-                    </div>
-                  ) : (
-                    <></>
-                  )}
-                </div>
-                <div className="text-lg ml-1">Ruti : {bill.ruti}</div>
-                <div className="ml-1 text-sm font-medium bg-white/5 w-full rounded-full h-4">
-                  <div
-                    className={`h-4 rounded-full bg-[#8866ff]`}
-                    style={{ width: `${bill.ruti * 10}%` }}
-                  ></div>
+                <div className="text-4xl font-medium mr-1 pb-3 opacity-75 px-2.5 relative">
+                  {getTOtal(bill) || 0}
+                  <p className="text-base font-medium text-start top-0 right-0 absolute">
+                    &#x20B9;
+                  </p>
                 </div>
               </div>
-              <div className="text-4xl font-medium mr-1 pb-3 opacity-75 px-2.5 relative">
-                {getTOtal(bill) || 0}
-                <p className="text-base font-medium text-start top-0 right-0 absolute">
-                  &#x20B9;
-                </p>
-              </div>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
-      <div className="bg-cyan-500 border border-cyan-600 rounded-full fixed bottom-7 right-7 backdrop-blur-3xl shadow-lg shadow-cyan-400/50 ">
+      <div className="bg-cyan-500 border border-cyan-600 rounded-full fixed bottom-7 right-7 backdrop-blur-3xl shadow-lg shadow-cyan-400/40 ">
         <Link to="/addBill" className="   ">
           <img
             src="./icons/plus.svg"

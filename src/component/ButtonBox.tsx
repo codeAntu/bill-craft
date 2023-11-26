@@ -5,18 +5,20 @@ export default function ButtonBox({
   text = "Sample Button",
   onClick = black_fn,
   color = "bg-accent",
+  shadow = "shadow-accent/40",
   food = true,
 }: {
   text?: string;
   onClick?: any;
   color?: string;
   food?: boolean;
+  shadow?: string;
 }) {
   return (
     <div>
       <button
-        className={`tap99 select-none rounded-xl p-4 text-sm font-medium  w-full text-white  ${
-          food ? color : "bg-white/5"
+        className={`tap99 select-none rounded-xl p-4 text-sm font-medium  w-full text-white  ${color} ${
+          food ? `shadow-lg ${shadow}` : "opacity-25 "
         }`}
         onClick={onClick}
       >

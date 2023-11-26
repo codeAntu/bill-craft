@@ -1,8 +1,6 @@
 import Button from "../component/Button";
-import Check from "../component/Check";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getDate } from "../constants";
 import ButtonBox from "../component/ButtonBox";
 
 export default function AddBill() {
@@ -31,6 +29,7 @@ export default function AddBill() {
 
     if (!bill.rice && !bill.meat && !bill.egg && !bill.fish && !bill.ruti) {
       console.log("invalid");
+      alert("Invalid Bill");
       return;
     }
 
@@ -49,13 +48,6 @@ export default function AddBill() {
     }
     return 0;
   }
-
-  function show() {
-    const a = JSON.parse(localStorage.getItem("bills") || "[]");
-    console.log(a);
-  }
-
-  console.log(date.toLocaleDateString("en-CA"));
 
   return (
     <div className="bg-black text-white h-dvh relative p-4">
@@ -82,13 +74,8 @@ export default function AddBill() {
 
       <div
         className={`flex flex-col justify-between min-h-[87dvh] ${
-          click ? "opacity-50 blur" : ""
+          click ? "opacity-50 blur pointer-events-none" : ""
         } `}
-        onClick={() => {
-          if (click) {
-            setClick(!click);
-          }
-        }}
       >
         <div className="space-y-3 mt-6">
           <div className="bg-white/10 border border-white/5  rounded-2xl">
@@ -101,61 +88,35 @@ export default function AddBill() {
               className="text-xl font-semibold bg-transparent py-4 px-4 w-[95%] outline-none"
             />
           </div>
-          {/* <div className="bg-white/10 px-5 py-4 space-y-4 rounded-3xl border-white/5 border-1">
-            <Check
-              text="Rice"
-              // color="bg-[#00e676]"
-              onClick={() => {
-                setRice(!rice);
-              }}
-            />
-            <hr className="opacity-50" />
-            <Check
-              text="Meat"
-              // color="bg-[#ff4081]"
-              onClick={() => {
-                setMeat(!meat);
-              }}
-            />
-            <Check
-              text="Fish"
-              // color="bg-[#03a9f4]"
-              onClick={() => {
-                setFish(!fish);
-              }}
-            />
-            <Check
-              text="Egg"
-              color="bg-[#ff5252]"
-              onClick={() => {
-                setEgg(!egg);
-              }}
-            />
-          </div> */}
           <div className="bg-white/10 px-5 py-4 rounded-3xl border-white/5 border-1 grid grid-cols-2 gap-4">
             <ButtonBox
               text="Rice"
               onClick={() => setRice(!rice)}
               food={rice}
               color="bg-[#00e676]"
+              shadow="shadow-[#00e676]/40"
             />
             <ButtonBox
               text="Meat"
               onClick={() => setMeat(!meat)}
               food={meat}
               color="bg-[#ff4081]"
+              shadow="shadow-[#ff4081]/40"
+            />
+
+            <ButtonBox
+              text="Egg"
+              onClick={() => setEgg(!egg)}
+              food={egg}
+              color="bg-[#ff5252]"
+              shadow="shadow-[#ff5252]/40"
             />
             <ButtonBox
               text="Fish"
               onClick={() => setFish(!fish)}
               food={fish}
               color="bg-[#03a9f4]"
-            />
-            <ButtonBox
-              text="Egg"
-              onClick={() => setEgg(!egg)}
-              food={egg}
-              color="bg-[#ff5252]"
+              shadow="shadow-[#03a9f4]/40"
             />
           </div>
           <div className=" bg-white/10 p-4 rounded-3xl">
@@ -202,23 +163,35 @@ export default function AddBill() {
         </div>
       </div>
       <div className="flex justify-center items-center">
-        {click ? popUp() : <></>}
+        {click ? popUp(click, setClick) : <></>}
       </div>
     </div>
   );
 }
 
-function popUp() {
+function popUp(click: any, setClick: any) {
   return (
-    <div className="absolute bottom-4 bg-white/10 pt-10 pb-5 px-5 backdrop-blur-md rounded-xl object-none w-[92%]">
-      <div className="text-xl font-semibold text-center mb-28">
+    <div className="fixed bottom-2 bg-slate-900/50 border-2 border-white/5 pt-8 pb-6 px-4 backdrop-blur-md rounded-3xl object-none w-[92%] space-y-6 ">
+      <div className="text-xl font-semibold text-center   ">
         Your Bill is Added{" "}
       </div>
-      <Button
-        onClick={() => {
-          window.history.back();
-        }}
-      />
+      <div className="p-2 opacity-50 text-center text-sm">
+        You can see your Bills in the Home Page. You can also edit or delete
+      </div>
+      <div className="grid grid-cols-2 gap-5">
+        <Button
+          text="Add more"
+          onClick={() => {
+            setClick(!click);
+          }}
+        />
+        <Button
+          text="OK"
+          onClick={() => {
+            window.history.back();
+          }}
+        />
+      </div>
     </div>
   );
 }
