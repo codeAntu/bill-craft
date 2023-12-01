@@ -131,6 +131,7 @@ export default function Profile() {
                 onClick={() => {
                   localStorage.clear();
                   setPopup(!popup);
+                  nav("/");
                 }}
               />
             </div>
@@ -139,12 +140,6 @@ export default function Profile() {
       ) : (
         <></>
       )}
-
-      <div>
-        <div className="text-sm font-bold opacity-30 pt-10 flex justify-center">
-          Made by Antu
-        </div>
-      </div>
     </div>
   );
 }
