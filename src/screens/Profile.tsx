@@ -1,13 +1,28 @@
-import { black_fn } from "../constants";
 import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
-import { Link, Navigate } from "react-router-dom";
-import ToggleSwitch from "../component/ToggleSwitch";
-import PopUp from "../component/PopUp";
+import { useState } from "react";
+import {
+  ArchiveRestore,
+  Camera,
+  DatabaseBackup,
+  Languages,
+  ListRestart,
+  LogIn,
+  Moon,
+} from "lucide-react";
+import { Pencil } from "lucide-react";
+import { ChevronRight } from "lucide-react";
+import { black_fn } from "../constants";
+import Button from "../component/Button";
 
 export default function Profile() {
   let nav = useNavigate();
+  const [name, setName] = useState("Ananta Karmakar");
+  const [popup, setPopup] = useState(false) as any;
+  const Cam = () => {
+    return <Camera size={48} fill="red" />;
+  };
 
+  const [number, setNumber] = useState(9800211400);
   function goBack() {
     nav(-1);
   }
@@ -21,66 +36,110 @@ export default function Profile() {
           className="invert h-6  aspect-square"
           onClick={goBack}
         />
-        <h1 className="text-2xl font-bold  ">Profile</h1>
+        <h1 className="text-2xl font-bold">Profile</h1>
       </div>
-      <div className="flex items-center justify-center bg-white/5 border border-white/5 py-6 rounded-2xl my-5">
-        <div className=" flex flex-col justify-center items-center gap-4 ">
+
+      <div className="flex justify-center items-center mb-6 ">
+        <div className="flex flex-col items-center justify-center gap-3">
           <img
             src="https://avatars.githubusercontent.com/u/98962215?v=4"
             alt=""
-            className=" rounded-full h-24  aspect-square"
+            className="rounded-full w-36"
           />
-          <h1 className="text-xl font-bold ">Ananta Karmakar</h1>
+          <div className="flex flex-col items-center justify-center gap-1">
+            <div className="text-xl font-semibold">{name}</div>
+            <div className=" text-sm opacity-50 font-medium"> +91 {number}</div>
+          </div>
         </div>
       </div>
-      <div className="flex flex-col gap-2 pt-4 ">
-        <div className="flex justify-between items-center p-3  rounded-lg bg-white/5 border-white/10 ">
-          <div className="flex items-center gap-3  ">
-            <img
-              src="./icons/theme.svg"
-              alt=""
-              className="w-6 aspect-square invert"
+
+      <div className="py-4 space-y-5">
+        <div>
+          <div className="p-2 text-sm opacity-40 font-medium">Account</div>
+          <div className="bg-white/5 px-6 py-6 rounded-2xl space-y-5">
+            <GetOptions
+              option="Edit Profile"
+              icon={<Pencil size={18} />}
+              onClick={() => {
+                nav("/profile/edit");
+              }}
             />
-            <div className="text-lg font-medium opacity-75">Theme</div>
-          </div>
-          <div>
-            <ToggleSwitch />
+            <GetOptions
+              option="Log Out"
+              subText="Log Out"
+              opcColor="text-accent font-normal"
+              icon={<LogIn size={18} />}
+            />
           </div>
         </div>
-        <GetOptions
-          text="BackUp & Restore"
-          img="./icons/backup.svg"
-          onClick={() => {
-            alert("Them");
-          }}
-        />
-
-        <GetOptions
-          text="Reset"
-          img="./icons/reset.svg"
-          onClick={() => {
-            localStorage.clear();
-            alert("All data has been reset");
-          }}
-        />
-
-        <GetOptions
-          text="Total"
-          img="./icons/total.svg"
-          onClick={() => {
-            alert("Them");
-          }}
-        />
-        <GetOptions
-          text="About"
-          img="./icons/about.svg"
-          onClick={() => {
-            alert("Them");
-          }}
-        />
-        {/* feedback  */}
-        <GetOptions text="Feedback" img="./icons/feedback.svg" />
+        <div>
+          <div className="p-2 text-sm opacity-40 font-medium">System</div>
+          <div className="bg-white/5 px-6 py-6 rounded-2xl space-y-5">
+            <GetOptions
+              option="Dark Mode"
+              subText="Auto"
+              icon={<Moon size={18} />}
+            />
+            <GetOptions
+              option="Language"
+              subText="English"
+              icon={<Languages size={18} />}
+            />
+          </div>
+        </div>
+        <div>
+          <div className="p-2 text-sm opacity-40 font-medium">Data</div>
+          <div className="bg-white/5 px-6 py-6 rounded-2xl space-y-5">
+            <GetOptions option="Back Up " icon={<DatabaseBackup size={18} />} />
+            <GetOptions option="Restore" icon={<ArchiveRestore size={18} />} />
+            <GetOptions
+              option="Reset"
+              opcColor="text-accent"
+              icon={<ListRestart size={18} />}
+              onClick={() => {
+                setPopup(true);
+              }}
+            />
+          </div>
+        </div>
       </div>
+      {popup ? (
+        <>
+          <div
+            className="bg-transparent h-full w-full fixed top-0 left-0 backdrop-blur-md"
+            onClick={() => {
+              setPopup(!popup);
+            }}
+          ></div>
+          <div className="fixed bottom-2 bg-slate-900/50 border-2 border-white/5 pt-8 pb-6 px-4 backdrop-blur-md rounded-3xl object-none w-[92%] space-y-6 ">
+            <div className="text-xl font-semibold text-center   ">
+              Do you want to Clear Your Bill History?{" "}
+            </div>
+            <div className="p-2 opacity-50 text-center text-sm">
+              This will clear all your bill history and you will not be able to
+              recover it.
+            </div>
+            <div className="grid grid-cols-2 gap-5">
+              <Button
+                text="No"
+                onClick={() => {
+                  setPopup(!popup);
+                }}
+              />
+              <Button
+                text="Huu"
+                onClick={() => {
+                  localStorage.clear();
+                  setPopup(!popup);
+                }}
+              />
+            </div>
+          </div>
+        </>
+      ) : (
+        <></>
+      )}
+
       <div>
         <div className="text-sm font-bold opacity-30 pt-10 flex justify-center">
           Made by Antu
@@ -91,22 +150,34 @@ export default function Profile() {
 }
 
 function GetOptions({
-  text = "text",
-  img = "link",
+  option = "Option",
+  opcColor = "",
+  subText = "",
+  icon = <Pencil size={18} />,
+  arrow = <ChevronRight size={24} />,
   onClick = black_fn,
 }: {
-  text?: string;
-  img?: string;
+  option?: string;
+  opcColor?: string;
+  subText?: string;
+  icon?: any;
+  arrow?: any;
   onClick?: any;
 }) {
   return (
-    <div
-      onClick={onClick}
-      className="bg-white/5 border-white/10 p-3 flex items-center gap-3 rounded-lg "
-    >
-      {onClick}
-      <img src={img} alt="" className="w-6 aspect-square invert" />
-      <div className="text-lg font-medium opacity-75">{text}</div>
+    <div className="flex justify-between items-center tap99 " onClick={onClick}>
+      <div className="flex items-center gap-4">
+        {icon}
+        <div className={`text-sm  ${opcColor}`}>{option}</div>
+      </div>
+      <div className="flex items-center gap-3">
+        <div className="text-xs opacity-40 font-medium">{subText}</div>
+        {arrow}
+      </div>
     </div>
   );
+}
+
+function editName() {
+  return <div className="fixed bg-blue-500 w-full h-full"></div>;
 }

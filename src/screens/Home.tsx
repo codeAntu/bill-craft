@@ -50,7 +50,7 @@ export default function Home() {
   return (
     <div className="bg-black text-white h-dvh">
       <div className="flex justify-between items-center px-4 py-4  sticky top-0 backdrop-blur z-10 bg-black/70 shadow-2xl shadow-black  ">
-        <div className="text-3xl font-semibold text-blue-400 ">Bill Craft</div>
+        <div className="text-3xl font-semibold text-accent ">Bill Craft</div>
         <Link to="/profile">
           {" "}
           <img
@@ -73,47 +73,53 @@ export default function Home() {
                 key={Math.random()}
                 className="bg-white/5 border border-white/10 p-2.5 rounded-3xl space-y-2 flex justify-between items-center"
               >
-                <div className="flex flex-col gap-1 w-[80%] ">
-                  <div className="ml-1 text-xl font-semibold pb-1 ">
+                <div className="flex flex-col gap-2.5 w-[80%] pb-1 ">
+                  <div className="ml-1 text-xl font-semibold ">
                     {getDate(bill.date)}
                   </div>
-                  <div className="flex gap-2">
+                  <div className="ml-1 flex gap-2">
                     {bill.rice ? (
-                      <div className="flex border bg-[#00e676] shadow-lg shadow-[#00e676]/40 border-white/5 rounded-full text-xs font-medium px-3 py-1">
+                      <div className="flex border bg-[#00e676] shadow-md shadow-[#00e676]/40 border-white/5 rounded-full text-xs font-medium px-3 py-1">
                         Rice{" "}
                       </div>
                     ) : (
                       <></>
                     )}
                     {bill.meat ? (
-                      <div className="flex border bg-[#ff4081] shadow-lg shadow-[#ff4081]/40 border-white/5 rounded-full text-xs font-medium px-3 py-1">
+                      <div className="flex border bg-[#ff4081] shadow-md shadow-[#ff4081]/40 border-white/5 rounded-full text-xs font-medium px-3 py-1">
                         Meat{" "}
                       </div>
                     ) : (
                       <></>
                     )}
                     {bill.fish ? (
-                      <div className="flex border bg-[#03a9f4] shadow-lg shadow-[#03a9f4]/40 border-white/5 rounded-full text-xs font-medium px-3 py-1">
+                      <div className="flex border bg-[#03a9f4] shadow-md shadow-[#03a9f4]/40 border-white/5 rounded-full text-xs font-medium px-3 py-1">
                         Fish{" "}
                       </div>
                     ) : (
                       <></>
                     )}
                     {bill.egg ? (
-                      <div className="flex border bg-[#ff5252] shadow-lg shadow-[#ff5252]/40 border-white/5 rounded-full text-xs font-medium px-3 py-1">
+                      <div className="flex border bg-[#ff5252] shadow-md shadow-[#ff5252]/40 border-white/5 rounded-full text-xs font-medium px-3 py-1">
                         Egg{" "}
                       </div>
                     ) : (
                       <></>
                     )}
                   </div>
-                  <div className="text-lg ml-1">Ruti : {bill.ruti}</div>
-                  <div className="ml-1 text-sm font-medium bg-white/5 w-full rounded-full h-4">
-                    <div
-                      className={`h-4 rounded-full bg-[#8866ff] shadow-md shadow-[#8866ff]/40`}
-                      style={{ width: `${bill.ruti * 10}%` }}
-                    ></div>
-                  </div>
+                  {/* <div className="text-lg ml-1">Ruti : {bill.ruti}</div> */}
+                  {bill.ruti ? (
+                    <div className="ml-1 text-sm font-medium bg-white/5 w-full rounded-full">
+                      <div
+                        className={`rounded-full bg-[#8866ff] shadow-md shadow-[#8866ff]/40 p-0.5 pl-2`}
+                        style={{ width: `${20 + bill.ruti * 8}%` }}
+                      >
+                        Ruti : {bill.ruti}
+                      </div>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
                 </div>
                 <div className="text-4xl font-medium mr-1 pb-3 opacity-75 px-2.5 relative">
                   {getTOtal(bill) || 0}
@@ -126,7 +132,7 @@ export default function Home() {
           })
         )}
       </div>
-      <div className="bg-cyan-500 border border-cyan-600 rounded-full fixed bottom-7 right-7 backdrop-blur-3xl shadow-lg shadow-cyan-400/40 ">
+      <div className="bg-accent border border-accent rounded-full fixed bottom-7 right-7 backdrop-blur-3xl shadow-lg shadow-accent/40 ">
         <Link to="/addBill" className="   ">
           <img
             src="./icons/plus.svg"

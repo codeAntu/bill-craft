@@ -5,7 +5,7 @@ import { black_fn } from "../constants";
 export default function ToggleSwitch({
   text = "text",
   onClick = black_fn,
-  color = "bg-[#8866ff]",
+  color = "bg-accent",
 }: {
   text?: string;
   onClick?: any;

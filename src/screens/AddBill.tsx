@@ -73,9 +73,10 @@ export default function AddBill() {
       </div>
 
       <div
-        className={`flex flex-col justify-between min-h-[87dvh] ${
-          click ? "opacity-50 blur pointer-events-none" : ""
-        } `}
+        className={`flex flex-col justify-between min-h-[87dvh] `}
+        // ${
+        //   click ? "opacity-50 blur pointer-events-none" : ""
+        // }
       >
         <div className="space-y-3 mt-6">
           <div className="bg-white/10 border border-white/5  rounded-2xl">
@@ -159,38 +160,51 @@ export default function AddBill() {
           </div>
         </div>
         <div>
-          <Button text="Add" onClick={addBill} />
+          <Button
+            text="Add"
+            onClick={() => {
+              setClick(!click);
+            }}
+          />
         </div>
       </div>
       <div className="flex justify-center items-center">
-        {click ? popUp(click, setClick) : <></>}
-      </div>
-    </div>
-  );
-}
-
-function popUp(click: any, setClick: any) {
-  return (
-    <div className="fixed bottom-2 bg-slate-900/50 border-2 border-white/5 pt-8 pb-6 px-4 backdrop-blur-md rounded-3xl object-none w-[92%] space-y-6 ">
-      <div className="text-xl font-semibold text-center   ">
-        Your Bill is Added{" "}
-      </div>
-      <div className="p-2 opacity-50 text-center text-sm">
-        You can see your Bills in the Home Page. You can also edit or delete
-      </div>
-      <div className="grid grid-cols-2 gap-5">
-        <Button
-          text="Add more"
-          onClick={() => {
-            setClick(!click);
-          }}
-        />
-        <Button
-          text="OK"
-          onClick={() => {
-            window.history.back();
-          }}
-        />
+        {click ? (
+          <>
+            <div
+              className="bg-transparent h-full w-full fixed top-0 left-0 backdrop-blur-md"
+              onClick={() => {
+                setClick(!click);
+              }}
+            ></div>
+            <div className="fixed bottom-2 bg-slate-900/50 border-2 border-white/5 pt-8 pb-6 px-4 backdrop-blur-md rounded-3xl object-none w-[92%] space-y-6 ">
+              <div className="text-xl font-semibold text-center   ">
+                Do you want to add this Bill ?{" "}
+              </div>
+              <div className="p-2 opacity-50 text-center text-sm">
+                You can see your Bills in the Home Page. You can also edit or
+                delete.
+              </div>
+              <div className="grid grid-cols-2 gap-5">
+                <Button
+                  text="No"
+                  onClick={() => {
+                    setClick(!click);
+                  }}
+                />
+                <Button
+                  text="Huu"
+                  onClick={() => {
+                    window.history.back();
+                    addBill();
+                  }}
+                />
+              </div>
+            </div>
+          </>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

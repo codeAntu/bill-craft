@@ -5,6 +5,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./screens/Home.tsx";
 import AddBill from "./screens/AddBill.tsx";
 import Profile from "./screens/Profile.tsx";
+import EditProfile from "./screens/EditProfile.tsx";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: "profile",
     element: <Profile />,
+  },
+  {
+    path: "profile/edit",
+    element: <EditProfile />,
   },
 ]);
 
