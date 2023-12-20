@@ -193,7 +193,7 @@ export default function AddBill() {
                   }}
                 />
                 <Button
-                  text="Huu"
+                  text="Add"
                   onClick={() => {
                     window.history.back();
                     addBill();
